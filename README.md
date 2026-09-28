@@ -11,6 +11,8 @@
 [![MIT](https://img.shields.io/badge/license-MIT-A98CFF?style=flat-square)](LICENSE)
 </div>
 
+[Open the live studio ↗](https://harshareddy0405.github.io/flow-forge/) · [Engineering notes](docs/ENGINEERING.md) · [Quality checks](https://github.com/harshareddy0405/flow-forge/actions)
+
 ## The idea
 
 Most automation diagrams are either too abstract to operate or too configuration-heavy to understand. Flow Forge asks a simpler question: **what if the workflow itself were the primary interface?**
