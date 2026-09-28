@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Flow Forge — design and simulate AI automations on a visual canvas."
+    />
+    <meta name="theme-color" content="#0d1110" />
+    <title>Flow Forge — Visual AI automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="interactions.css" />
+    <link rel="stylesheet" href="quality.css" />
+  </head>
+  <body>
+    <a class="skip" href="#canvas">Skip to workflow canvas</a>
+    <header>
+      <a class="brand" href="#"
+        ><span class="mark"><i></i><i></i><i></i></span
+        ><strong>Flow Forge</strong><small>studio</small></a
+      >
+      <div class="crumb">
+        <span>Workflows</span><b>/</b
+        ><strong id="workflowTitle">Signal-to-story engine</strong
+        ><button id="renameButton" aria-label="Rename workflow">✎</button>
+      </div>
+      <div class="header-actions">
+        <span class="saved" id="saveState"><i></i> Saved locally</span>
+        <button
+          class="icon-btn"
+          id="undoButton"
+          aria-label="Undo last action"
+          title="Undo"
+        >
+          ↶
+        </button>
+        <button class="outline-btn" id="exportButton">Export</button>
+        <button class="run-btn" id="runButton">
+          <span>▶</span> Test run <kbd>R</kbd>
+        </button>
+      </div>
+    </header>
+
+    <main class="studio">
+      <aside class="library">
+        <div class="panel-title">
+          <div>
+            <p>BUILDING BLOCKS</p>
+            <h1>Node library</h1>
+          </div>
+          <button id="collapseLibrary" aria-label="Collapse library">‹</button>
+        </div>
+        <label class="search"
+          ><span>⌕</span
+          ><input
+            id="nodeSearch"
+            aria-label="Find a node"
+            type="search"
+            placeholder="Find a node…"
+          /><kbd>/</kbd></label
+        >
+        <div class="node-groups" id="nodeGroups"></div>
+        <button class="template-button" id="templateButton">
+          <span>✦</span>
+          <div>
+            <strong>Start from a recipe</strong
+            ><small>3 proven workflow patterns</small>
+          </div>
+          <b>→</b>
+        </button>
+        <div class="library-note">
+          <i></i>
+          <p><strong>Local canvas</strong><br />Nothing leaves this browser.</p>
+        </div>
+      </aside>
+
+      <section class="canvas-shell">
+        <div class="canvas-toolbar">
+          <button id="expandLibrary" class="outline-btn" hidden>
+            Show library
+          </button>
+          <div class="mode-switch">
+            <button class="active">Design</button
+            ><button id="runsMode">Runs <span id="runCount">3</span></button>
+          </div>
+          <div class="canvas-meta">
+            <span id="nodeCount">5 nodes</span><i></i><span>Draft v4</span>
+          </div>
+          <div class="zoom-tools">
+            <button id="zoomOut" aria-label="Zoom out">−</button
+            ><span id="zoomValue">75%</span
+            ><button id="zoomIn" aria-label="Zoom in">+</button
+            ><button id="fitButton" aria-label="Fit workflow">⌗</button>
+          </div>
+        </div>
+
+        <div class="canvas" id="canvas" aria-label="Workflow design canvas">
+          <div class="grid" aria-hidden="true"></div>
+          <svg id="connections" aria-hidden="true"></svg>
+          <div id="nodes"></div>
+          <div class="canvas-hint">
+            <span>+</span> Select a block to add · drag nodes to arrange
+          </div>
+          <div class="minimap">
+            <div id="minimapNodes"></div>
+            <span>OVERVIEW</span>
+          </div>
+        </div>
+
+        <section class="console" id="console" aria-label="Run console">
+          <div class="console-head">
+            <div>
+              <i></i><strong>Test console</strong
+              ><span id="consoleStatus">Ready</span>
+            </div>
+            <button id="clearConsole">Clear</button>
+          </div>
+          <div class="logs" id="logs">
+            <p class="muted">
+              Run the workflow to inspect each node's deterministic execution
+              trace.
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <aside class="inspector" id="inspector">
+        <div class="inspector-empty" id="inspectorEmpty">
+          <span>◇</span>
+          <h2>Select a node</h2>
+          <p>
+            Choose any block on the canvas to edit its behavior and test data.
+          </p>
+        </div>
+        <div class="inspector-content" id="inspectorContent" hidden>
+          <div class="inspector-head">
+            <div>
+              <p>NODE SETTINGS</p>
+              <h2 id="inspectorKind">Intelligence</h2>
+            </div>
+            <button id="closeInspector" aria-label="Close inspector">×</button>
+          </div>
+          <div class="node-identity">
+            <span id="inspectorIcon">✦</span>
+            <div>
+              <strong id="inspectorName">Extract insights</strong
+              ><small id="inspectorId">intelligence_03</small>
+            </div>
+          </div>
+          <label>Label<input id="labelInput" maxlength="42" /></label>
+          <label
+            >Description<textarea
+              id="descriptionInput"
+              maxlength="110"
+            ></textarea>
+          </label>
+          <div id="aiSettings">
+            <label
+              >Processing mode<select id="modelInput">
+                <option value="fast">Fast · lower latency</option>
+                <option value="balanced">Balanced</option>
+                <option value="deep">Deep · richer output</option>
+              </select></label
+            >
+            <label class="range-label"
+              ><span>Creativity <output id="temperatureValue">0.4</output></span
+              ><input
+                id="temperatureInput"
+                type="range"
+                min="0"
+                max="1"
+                value="0.4"
+                step="0.1"
+            /></label>
+          </div>
+          <label
+            >Test payload<textarea
+              id="payloadInput"
+              class="code"
+              spellcheck="false"
+            >
+{"topic":"AI design tools"}</textarea>
+          </label>
+          <div class="inspector-actions">
+            <button id="duplicateButton">Duplicate</button
+            ><button class="danger" id="deleteButton">Delete</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <dialog id="recipeDialog">
+      <div class="dialog-head">
+        <div>
+          <p>WORKFLOW RECIPES</p>
+          <h2>Choose a starting point</h2>
+        </div>
+        <button id="closeRecipes" aria-label="Close">×</button>
+      </div>
+      <p class="dialog-copy">
+        Swap the canvas for a proven pattern, then make it yours.
+      </p>
+      <div class="recipes">
+        <button data-recipe="story">
+          <span class="recipe-art lime">↯ ✦ →</span
+          ><strong>Signal-to-story</strong
+          ><small>Collect, synthesize, review, publish</small><b>5 nodes</b>
+        </button>
+        <button data-recipe="support">
+          <span class="recipe-art blue">⌁ ◇ →</span
+          ><strong>Support triage</strong
+          ><small>Classify, route, draft, escalate</small><b>6 nodes</b>
+        </button>
+        <button data-recipe="research">
+          <span class="recipe-art orange">⌕ ✦ □</span
+          ><strong>Research pulse</strong
+          ><small>Gather, rank, summarize, archive</small><b>5 nodes</b>
+        </button>
+      </div>
+    </dialog>
+
+    <script src="storage.js"></script>
+    <script src="schema.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

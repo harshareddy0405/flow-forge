@@ -1,0 +1,21 @@
+.studio.library-collapsed {
+  grid-template-columns: 0 minmax(500px, 1fr) 250px;
+}
+
+.studio.library-collapsed .library {
+  padding-inline: 0;
+  overflow: hidden;
+  border-right: 0;
+}
+
+@media (max-width: 1050px) {
+  .studio.library-collapsed {
+    grid-template-columns: 0 minmax(500px, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .studio.library-collapsed {
+    display: block;
+  }
+}

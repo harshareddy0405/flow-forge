@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+.idea/
+.vscode/
+node_modules/
+dist/
+node_modules/
+coverage/
+.env
+.env.*
+*.recovery
